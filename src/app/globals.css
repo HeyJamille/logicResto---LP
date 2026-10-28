@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+/*
+ * Tokens copiados do painel (frontend/src/app/globals.css), só o tema claro: a landing usa os
+ * mesmos nomes --md-* para ficar com a mesma cara do sistema.
+ */
+
+@theme {
+  --font-sans: var(--font-inter), Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, monospace;
+
+  --radius-xs: 4px;
+  --radius-sm: 0.525rem;
+  --radius-md: 0.7rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.225rem;
+  --radius-2xl: 1.575rem;
+  --radius-3xl: 1.925rem;
+
+  --breakpoint-exp: 840px;
+}
+
+:root {
+  color-scheme: light;
+
+  --md-primary: #2563eb;
+  --md-on-primary: #ffffff;
+  --md-primary-container: color-mix(in oklab, var(--md-primary) 10%, var(--md-surface-container-lowest));
+  --md-on-primary-container: color-mix(in oklch, var(--md-primary) 82%, black);
+
+  --md-secondary-container: oklch(0.945 0.005 250);
+  --md-on-secondary-container: oklch(0.27 0.01 250);
+
+  --md-tertiary: #059669;
+  --md-tertiary-container: color-mix(in oklab, #059669 12%, var(--md-surface-container-lowest));
+  --md-on-tertiary-container: #065f46;
+  --md-warning-container: color-mix(in oklab, #d97706 14%, var(--md-surface-container-lowest));
+  --md-on-warning-container: #92400e;
+
+  --md-surface: oklch(0.968 0.003 250);
+  --md-surface-container-lowest: oklch(0.99 0.002 250);
+  --md-surface-container: oklch(0.945 0.005 250);
+  --md-surface-container-high: oklch(0.93 0.006 250);
+  --md-on-surface: oklch(0.21 0.008 250);
+  --md-on-surface-variant: oklch(0.49 0.012 250);
+  --md-outline-variant: oklch(0.885 0.006 250);
+  --md-inverse-surface: oklch(0.21 0.008 250);
+  --ring: #93c5fd;
+
+  --md-elevation-2: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --md-elevation-3: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--md-surface-container);
+  color: var(--md-on-surface);
+  -webkit-font-smoothing: antialiased;
+}
