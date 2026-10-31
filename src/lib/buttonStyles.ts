@@ -7,7 +7,7 @@ export type ButtonVariant = "primary" | "outline" | "ghost" | "inverse";
 export type ButtonSize = "md" | "lg" | "xl";
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary: "border-transparent bg-[var(--md-primary)] text-[var(--md-on-primary)] hover:bg-[var(--md-primary-dark)] shadow-[0_10px_24px_-10px_var(--md-primary)]",
+  primary: "border-transparent bg-[var(--md-primary)] text-[var(--md-on-primary)] hover:bg-[var(--md-primary-dark)]",
   outline:
     "border-[var(--md-outline-variant)] bg-[var(--md-surface)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container)]",
   ghost: "border-transparent text-[var(--md-on-surface-variant)] hover:bg-[var(--md-surface-container-high)] hover:text-[var(--md-on-surface)]",

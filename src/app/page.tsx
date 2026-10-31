@@ -46,13 +46,14 @@ import hamburguerImg from "../../public/img/hamburguer.jpg";
 import pizzaioloImg from "../../public/img/pizzaiolo.jpg";
 
 // Links configurados no .env (veja .env.example).
-const CONTACT_HREF = process.env.NEXT_PUBLIC_CONTACT_URL ?? "https://wa.me/?text=Quero%20conhecer%20o%20LogicRest%C3%B4";
+const CONTACT_HREF = process.env.NEXT_PUBLIC_CONTACT_URL ?? "https://wa.me/5585999063736?text=Quero%20conhecer%20o%20LogicRest%C3%B4";
 
 const NAV = [
   { href: "#dia-a-dia", label: "No dia a dia" },
   { href: "#como-funciona", label: "Como funciona" },
   { href: "#recursos", label: "O que tem" },
   { href: "#perguntas", label: "Dúvidas" },
+  { href: "#planos", label: "Planos" },
 ];
 
 // Tipos de casa que rolam na faixa abaixo do topo.
@@ -264,6 +265,63 @@ const ROLES: { role: string; quote: string; text: string; image: StaticImageData
     text: "Vê a fila em ordem, com o tempo de cada pedido.",
     image: cozinheiraImg,
     alt: "Cozinheira sorrindo na cozinha do restaurante",
+  },
+];
+
+// Planos pagos ainda sem preço definido: aparecem como "Sob consulta" e levam para o WhatsApp.
+const PLANS: {
+  name: string;
+  tagline: string;
+  price: string;
+  period?: string;
+  cta: string;
+  note: string;
+  features: string[];
+  featured?: boolean;
+}[] = [
+  {
+    name: "Avaliação gratuita",
+    tagline: "Pra conhecer o sistema completo",
+    price: "R$ 0",
+    period: "por 7 dias",
+    cta: "Começar teste grátis",
+    note: "Sem cartão de crédito · Sem fidelidade",
+    features: [
+      "Todos os recursos liberados",
+      "Cardápio com QR Code",
+      "Mapa de mesas e tela da cozinha",
+      "Caixa, estoque e relatórios",
+      "Logins para a equipe",
+    ],
+    featured: true,
+  },
+  {
+    name: "Essencial",
+    tagline: "Pra organizar o salão e o caixa",
+    price: "Sob consulta",
+    cta: "Falar com a gente",
+    note: "Para uma unidade",
+    features: [
+      "Cardápio com QR Code",
+      "Mapa de mesas",
+      "Tela da cozinha",
+      "Caixa com fechamento",
+      "Impressão no balcão",
+    ],
+  },
+  {
+    name: "Profissional",
+    tagline: "Pra quem quer controle total",
+    price: "Sob consulta",
+    cta: "Falar com a gente",
+    note: "Para uma ou mais unidades",
+    features: [
+      "Tudo do Essencial",
+      "Delivery e retirada",
+      "Controle de estoque",
+      "Relatórios de vendas",
+      "Mais de uma unidade",
+    ],
   },
 ];
 
@@ -758,28 +816,64 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Chamada final */}
-        <section id="contato" className="px-4 py-16 sm:px-6">
-          <div
-            {...reveal()}
-            className="relative mx-auto flex min-h-[280px] max-w-5xl items-center overflow-hidden rounded-[2rem] bg-[var(--md-primary)] text-white"
-          >
-            {/* Foto some no azul com máscara, sem emenda entre fundo e imagem. */}
-            <div className="absolute inset-y-0 right-0 hidden w-1/2 mask-l-from-40% mask-l-to-100% lg:block">
-              <Image src={pizzaioloImg} alt="" fill placeholder="blur" sizes="512px" className="object-cover object-[center_15%]" />
-            </div>
-            <div className="relative px-8 py-12 sm:px-12">
-              <h2 className="mb-3 font-display text-3xl font-bold tracking-tight sm:text-4xl">Bora conversar?</h2>
-              <p className="mb-7 max-w-sm text-white/85">A gente mostra o sistema rodando com o seu cardápio, sem enrolação.</p>
-              <a
-                href={CONTACT_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={buttonClasses({ variant: "inverse", size: "lg", className: "group h-11 px-5" })}
-              >
-                Chamar no WhatsApp
-                <ArrowRight className="transition-transform group-hover:translate-x-1" />
-              </a>
+        {/* Planos */}
+        <section id="planos" className="scroll-mt-20 py-16 lg:py-20">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <SectionHeading
+              eyebrow="Planos"
+              title="Escolha o plano da sua casa"
+              text="Comece com 7 dias grátis e, depois, fique com o plano que faz sentido pro seu restaurante."
+            />
+            <div className="grid items-stretch gap-6 md:grid-cols-3">
+              {PLANS.map((plan, i) => (
+                <div key={plan.name} {...reveal(i * 100)}>
+                  <div
+                    className={`relative flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-[var(--md-elevation-2)] transition-transform duration-300 hover:-translate-y-1.5 ${plan.featured ? "ring-2 ring-[var(--md-primary)]" : "ring-1 ring-[var(--md-outline-variant)]"}`}
+                  >
+                    {plan.featured && (
+                      <div className="bg-[var(--md-primary)] py-1.5 text-center text-xs font-bold uppercase tracking-wider text-white">
+                        Comece por aqui
+                      </div>
+                    )}
+                    <div className="flex flex-1 flex-col p-7">
+                      <h3 className="font-display text-lg font-bold">{plan.name}</h3>
+                      <p className="mb-5 text-sm text-[var(--md-on-surface-variant)]">{plan.tagline}</p>
+                      <p className="mb-6 flex min-h-12 items-baseline gap-1.5">
+                        <span
+                          className={`font-display font-extrabold tracking-tight ${plan.period ? "text-5xl" : "text-3xl"}`}
+                        >
+                          {plan.price}
+                        </span>
+                        {plan.period && <span className="font-medium text-[var(--md-on-surface-variant)]">{plan.period}</span>}
+                      </p>
+                      <ul className="mb-7 space-y-3">
+                        {plan.features.map((f) => (
+                          <li key={f} className="flex items-center gap-2.5 text-sm font-medium">
+                            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--md-primary-container)] text-[var(--md-primary)]">
+                              <Check className="h-3 w-3" strokeWidth={3} />
+                            </span>
+                            {f}
+                          </li>
+                        ))}
+                      </ul>
+                      <a
+                        href={CONTACT_HREF}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={buttonClasses({
+                          variant: plan.featured ? "primary" : "outline",
+                          size: "lg",
+                          className: "group mt-auto h-12 w-full text-base",
+                        })}
+                      >
+                        {plan.cta}
+                        <ArrowRight className="transition-transform group-hover:translate-x-1" />
+                      </a>
+                      <p className="mt-3 text-center text-xs text-[var(--md-on-surface-variant)]">{plan.note}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
